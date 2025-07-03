@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Projets</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 25px;
+            display: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid #3498db;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-left-color: #e74c3c;
+        }
+        
+        .card.active {
+            display: block;
+            animation: fadeIn 0.6s;
+        }
+        
+        .card h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.5em;
+        }
+        
+        .card p {
+            color: #7f8c8d;
+            line-height: 1.7;
+        }
+        
+        .card .tags {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .card .tag {
+            background: #e0f7fa;
+            color: #00838f;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .counter {
+            text-align: center;
+            margin: 25px 0;
+            font-size: 1.1em;
+            color: #7f8c8d;
+        }
+        
+        .loader {
+            text-align: center;
+            margin: 50px 0;
+            font-size: 1.2em;
+            color: #7f8c8d;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mes Projets</h1>
+            <p>Découvrez mes réalisations professionnelles</p>
+        </header>
+        
+        <div class="counter">
+            Projet <span id="current">1</span> sur <span id="total">...</span>
+        </div>
+        
+        <div id="loader" class="loader">Chargement des projets...</div>
+        
+        <div id="cards-container" style="display: none;">
+            <!-- Les cartes seront générées par JavaScript -->
+        </div>
+        
+        <div class="navigation">
+            <button id="prev-btn" disabled>Précédent</button>
+            <button id="next-btn" disabled>Suivant</button>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let projectsData = [];
+        let totalCards = 0;
+        let currentCard = 1;
+        
+        // Éléments du DOM
+        const cardsContainer = document.getElementById('cards-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const currentSpan = document.getElementById('current');
+        const totalSpan = document.getElementById('total');
+        const loader = document.getElementById('loader');
+        
+        // Charger les données depuis le fichier JSON
+        async function loadProjects() {
+            try {
+                const response = await fetch('projects.json');
+                if (!response.ok) {
+                    throw new Error('Erreur de chargement des données');
+                }
+                projectsData = await response.json();
+                totalCards = projectsData.length;
+                totalSpan.textContent = totalCards;
+                
+                if (totalCards > 0) {
+                    createCards();
+                    loader.style.display = 'none';
+                    cardsContainer.style.display = 'block';
+                } else {
+                    loader.textContent = 'Aucun projet disponible';
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                loader.textContent = 'Erreur de chargement des projets';
+            }
+        }
+        
+        // Créer les cartes
+        function createCards() {
+            projectsData.forEach((project, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.id = `card-${index + 1}`;
+                
+                // Contenu de la carte
+                card.innerHTML = `
+                    <h2>${project.title || `Projet ${index + 1}`}</h2>
+                    <p>${project.description || 'Description non disponible'}</p>
+                    ${project.tags ? `<div class="tags">${
+                        project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')
+                    }</div>` : ''}
+                `;
+                
+                // Redirection au clic
+                if (project.link) {
+                    card.addEventListener('click', () => {
+                        window.open(project.link, '_blank');
+                    });
+                }
+                
+                cardsContainer.appendChild(card);
+            });
+            
+            showCard(currentCard);
+        }
+        
+        // Afficher une carte spécifique
+        function showCard(index) {
+            // Cacher toutes les cartes
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Afficher la carte sélectionnée
+            const cardToShow = document.getElementById(`card-${index}`);
+            if (cardToShow) {
+                cardToShow.classList.add('active');
+            }
+            
+            // Mettre à jour le compteur
+            currentSpan.textContent = index;
+            
+            // Gérer l'état des boutons
+            prevBtn.disabled = index === 1;
+            nextBtn.disabled = index === totalCards;
+        }
+        
+        // Navigation
+        prevBtn.addEventListener('click', () => {
+            if (currentCard > 1) {
+                currentCard--;
+                showCard(currentCard);
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentCard < totalCards) {
+                currentCard++;
+                showCard(currentCard);
+            }
+        });
+        
+        // Navigation au clavier
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentCard > 1) {
+                currentCard--;
+                showCard(currentCard);
+            } else if (e.key === 'ArrowRight' && currentCard < totalCards) {
+                currentCard++;
+                showCard(currentCard);
+            }
+        });
+        
+        // Initialisation
+        loadProjects();
+    </script>
+</body>
+</html>
