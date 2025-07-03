@@ -1,14 +1,30 @@
 [
-    {   "id": "01",
-        "title": "Heart Trail Animation",
-        "description": "Plateforme de vente en ligne avec paiement sécurisé",
-        "link": "projects/01-heart-trail-animation/index.html",
-        "tags": ["HTML", "CSS", "JavaScript"]
-    },
-    {   "id": "02",
-        "title": "Auto Text Effect Animation",
-        "description": "App de gestion de tâches multiplateforme",
-        "link": "projects/02-auto-text-effect-animation/index.html",
-        "tags": ["HTML", "CSS", "JavaScript"]
-    }
+  {
+    "id": "01",
+    "title": "Heart Trail Animation",
+    "description": "nimation interactive où une traînée de cœurs colorés suit le curseur. Effet visuel poétique avec paramètres personnalisables : taille, couleur et vitesse des particules. Développé en Canvas API pour des performances optimales.",
+    "link": "projects/01-heart-trail-animation/index.html",
+    "technologies": ["JavaScript", "HTML5 Canvas", "CSS3"],
+    "features": [
+      "Génération procédurale de particules",
+      "Effet de fondu dynamique",
+      "Responsive (fonctionne sur mobile avec touch events)",
+      "Configuration en temps réel"
+    ],
+    "tags": ["animation", "interactive", "canvas"]
+  },
+  {
+    "id": "02",
+    "title": "Auto Text Effect Animation",
+    "description": "Simulation d'écriture automatique avec effets typographiques avancés. Plusieurs modes disponibles : machine à écrire, effacement progressif, et composition morphing. Contrôle précis du timing et gestion des retours à la ligne automatiques.",
+    "link": "projects/02-auto-text-effect-animation/index.html",
+    "technologies": ["JavaScript ES6", "GSAP (optionnel)", "CSS Animations"],
+    "features": [
+      "Support Unicode/émoticônes",
+      "Callback à chaque caractère",
+      "Système de file d'attente pour phrases multiples",
+      "Effets sonores synchronisés (optionnel)"
+    ],
+    "tags": ["typography", "animation", "ui"]
+  }
 ]
