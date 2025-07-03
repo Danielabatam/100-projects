@@ -18,7 +18,7 @@
     "title": "Auto Text Effect Animation",
     "description": "Simulation d'écriture automatique avec effets typographiques avancés. Plusieurs modes disponibles : machine à écrire, effacement progressif, et composition morphing. Contrôle précis du timing et gestion des retours à la ligne automatiques.",
     "link": "projects/02-auto-text-effect-animation/index.html",
-    "technologies": ["JavaScript ES6", "GSAP (optionnel)", "CSS Animations"],
+    "technologies": ["JavaScript ES6", "CSS Animations"],
     "features": [
       "Support Unicode/émoticônes",
       "Callback à chaque caractère",
