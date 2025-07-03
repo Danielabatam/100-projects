@@ -1,20 +1,14 @@
 [
     {   "id": "01",
-        "title": "Site E-commerce",
+        "title": "Heart Trail Animation",
         "description": "Plateforme de vente en ligne avec paiement sécurisé",
-        "link": "https://exemple.com/ecommerce",
-        "tags": ["HTML", "CSS", "JavaScript", "React"]
+        "link": "projects/01-heart-trail-animation/index.html",
+        "tags": ["HTML", "CSS", "JavaScript"]
     },
     {   "id": "02",
-        "title": "Application Mobile",
+        "title": "Auto Text Effect Animation",
         "description": "App de gestion de tâches multiplateforme",
-        "link": "https://exemple.com/app-mobile",
-        "tags": ["React Native", "Firebase"]
-    },
-    {   "id": "03",
-        "title": "Dashboard Analytique",
-        "description": "Visualisation de données en temps réel",
-        "link": "https://exemple.com/analytics",
-        "tags": ["D3.js", "Node.js", "MongoDB"]
+        "link": "projects/02-auto-text-effect-animation/index.html",
+        "tags": ["HTML", "CSS", "JavaScript"]
     }
 ]
