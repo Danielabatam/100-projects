@@ -2,7 +2,7 @@
   {
     "id": "01",
     "title": "Heart Trail Animation",
-    "description": "nimation interactive où une traînée de cœurs colorés suit le curseur. Effet visuel poétique avec paramètres personnalisables : taille, couleur et vitesse des particules. Développé en Canvas API pour des performances optimales.",
+    "description": "Animation interactive où une traînée de cœurs colorés suit le curseur. Effet visuel poétique avec paramètres personnalisables : taille, couleur et vitesse des particules. Développé en Canvas API pour des performances optimales.",
     "link": "projects/01-heart-trail-animation/index.html",
     "technologies": ["JavaScript", "HTML5 Canvas", "CSS3"],
     "features": [
