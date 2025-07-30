@@ -1,265 +1,142 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio - Tous mes projets</title>
-    <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2c3e50;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f7fa;
-            color: #333;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        h1 {
-            color: var(--secondary-color);
-            font-size: 2.5em;
-        }
-        
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 10px;
-        }
-        
-        .project-card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border-top: 4px solid var(--primary-color);
-        }
-        
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
-            border-top-color: #e74c3c;
-        }
-        
-        .card-content {
-            padding: 20px;
-        }
-        
-        .project-number {
-            display: inline-block;
-            background: var(--secondary-color);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        
-        .project-card h2 {
-            margin: 0 0 10px;
-            color: var(--secondary-color);
-            font-size: 1.3em;
-        }
-        
-        .project-card p {
-            color: #666;
-            line-height: 1.6;
-            margin: 0 0 15px;
-            font-size: 0.95em;
-        }
-        
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .tag {
-            background: #e0f7fa;
-            color: #00838f;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.75em;
-        }
-        
-        .search-filter {
-            margin-bottom: 30px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        #search {
-            flex-grow: 1;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1em;
-            min-width: 250px;
-        }
-        
-        .filter-btn {
-            padding: 12px 20px;
-            background: #ecf0f1;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--primary-color);
-            color: white;
-        }
-        
-        .loader {
-            text-align: center;
-            padding: 50px;
-            font-size: 1.2em;
-        }
-        
-        @media (max-width: 768px) {
-            .projects-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            }
-        }
-    </style>
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="mobie-warning">
+      ⚠️ Cette page est optimisée pour les ordinateurs. Veuillez l'ouvrir sur un
+      écran de bureau pour une meilleure expérience.
+    </div>
+
     <div class="container">
-        <header>
-            <h1>Mes Projets</h1>
-            <p>Découvrez l'ensemble de mes réalisations</p>
-        </header>
-        
-        <div class="search-filter">
-            <input type="text" id="search" placeholder="Rechercher un projet...">
-            <button class="filter-btn active" data-filter="all">Tous</button>
-            <button class="filter-btn" data-filter="web">Web</button>
-            <button class="filter-btn" data-filter="mobile">Mobile</button>
-            <!-- Ajoutez d'autres boutons de filtre si besoin -->
-        </div>
-        
-        <div id="loader" class="loader">Chargement des projets...</div>
-        
-        <div id="projects-container" class="projects-grid">
-            <!-- Les cartes seront générées par JavaScript -->
-        </div>
+      <header>
+        <h1>Mes Projets</h1>
+        <p>Découvrez l'ensemble de mes réalisations</p>
+      </header>
+
+      <div class="search-filter">
+        <input type="text" id="search" placeholder="Rechercher un projet..." />
+        <button class="filter-btn active" data-filter="all">Tous</button>
+        <button class="filter-btn" data-filter="web">Web</button>
+        <button class="filter-btn" data-filter="mobile">Mobile</button>
+        <!-- Ajoutez d'autres boutons de filtre si besoin -->
+      </div>
+
+      <div id="loader" class="loader">Chargement des projets...</div>
+
+      <div id="projects-container" class="projects-grid">
+        <!-- Les cartes seront générées par JavaScript -->
+      </div>
     </div>
 
     <script>
-        // Variables globales
-        let projectsData = [];
-        let filteredProjects = [];
-        
-        // Éléments du DOM
-        const projectsContainer = document.getElementById('projects-container');
-        const loader = document.getElementById('loader');
-        const searchInput = document.getElementById('search');
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        
-        // Charger les projets depuis JSON
-        async function loadProjects() {
-            try {
-                const response = await fetch('projects.json');
-                projectsData = await response.json();
-                
-                // Initialiser avec tous les projets visibles
-                filteredProjects = [...projectsData];
-                displayProjects();
-                
-                loader.style.display = 'none';
-            } catch (error) {
-                console.error("Erreur de chargement:", error);
-                loader.textContent = "Erreur de chargement des projets";
-            }
+      // Variables globales
+      let projectsData = [];
+      let filteredProjects = [];
+
+      // Éléments du DOM
+      const projectsContainer = document.getElementById("projects-container");
+      const loader = document.getElementById("loader");
+      const searchInput = document.getElementById("search");
+      const filterButtons = document.querySelectorAll(".filter-btn");
+
+      // Charger les projets depuis JSON
+      async function loadProjects() {
+        try {
+          const response = await fetch("projects.json");
+          projectsData = await response.json();
+
+          // Initialiser avec tous les projets visibles
+          filteredProjects = [...projectsData];
+          displayProjects();
+
+          loader.style.display = "none";
+        } catch (error) {
+          console.error("Erreur de chargement:", error);
+          loader.textContent = "Erreur de chargement des projets";
         }
-        
-        // Afficher les projets
-        function displayProjects() {
-            projectsContainer.innerHTML = '';
-            
-            filteredProjects.forEach(project => {
-                const card = document.createElement('div');
-                card.className = 'project-card';
-                
-                card.innerHTML = `
+      }
+
+      // Afficher les projets
+      function displayProjects() {
+        projectsContainer.innerHTML = "";
+
+        filteredProjects.forEach((project) => {
+          const card = document.createElement("div");
+          card.className = "project-card";
+
+          card.innerHTML = `
                     <div class="card-content">
                         <div class="project-number">${project.id}</div>
                         <h2>${project.title}</h2>
                         <p>${project.description}</p>
                         <div class="tags">
-                            ${project.tags ? project.tags.map(tag => 
-                                `<span class="tag">${tag}</span>`
-                            ).join('') : ''}
+                            ${
+                              project.tags
+                                ? project.tags
+                                    .map(
+                                      (tag) => `<span class="tag">${tag}</span>`
+                                    )
+                                    .join("")
+                                : ""
+                            }
                         </div>
                     </div>
                 `;
-                
-                // Redirection au clic
-                if (project.link) {
-                    card.addEventListener('click', () => {
-                        window.open(project.link, '_blank');
-                    });
-                }
-                
-                projectsContainer.appendChild(card);
+
+          // Redirection au clic
+          if (project.link) {
+            card.addEventListener("click", () => {
+              window.open(project.link, "_blank");
             });
-        }
-        
-        // Filtrage et recherche
-        function filterProjects() {
-            const searchTerm = searchInput.value.toLowerCase();
-            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
-            
-            filteredProjects = projectsData.filter(project => {
-                const matchesSearch = 
-                    project.title.toLowerCase().includes(searchTerm) || 
-                    project.description.toLowerCase().includes(searchTerm) ||
-                    (project.tags && project.tags.some(tag => 
-                        tag.toLowerCase().includes(searchTerm)));
-                
-                const matchesFilter = 
-                    activeFilter === 'all' || 
-                    (project.tags && project.tags.includes(activeFilter));
-                
-                return matchesSearch && matchesFilter;
-            });
-            
-            displayProjects();
-        }
-        
-        // Événements
-        searchInput.addEventListener('input', filterProjects);
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                filterProjects();
-            });
+          }
+
+          projectsContainer.appendChild(card);
         });
-        
-        // Initialisation
-        loadProjects();
+      }
+
+      // Filtrage et recherche
+      function filterProjects() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeFilter =
+          document.querySelector(".filter-btn.active").dataset.filter;
+
+        filteredProjects = projectsData.filter((project) => {
+          const matchesSearch =
+            project.title.toLowerCase().includes(searchTerm) ||
+            project.description.toLowerCase().includes(searchTerm) ||
+            (project.tags &&
+              project.tags.some((tag) =>
+                tag.toLowerCase().includes(searchTerm)
+              ));
+
+          const matchesFilter =
+            activeFilter === "all" ||
+            (project.tags && project.tags.includes(activeFilter));
+
+          return matchesSearch && matchesFilter;
+        });
+
+        displayProjects();
+      }
+
+      // Événements
+      searchInput.addEventListener("input", filterProjects);
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          filterButtons.forEach((btn) => btn.classList.remove("active"));
+          button.classList.add("active");
+          filterProjects();
+        });
+      });
+
+      // Initialisation
+      loadProjects();
     </script>
-</body>
+  </body>
 </html>
