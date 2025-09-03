@@ -26,5 +26,18 @@
       "Effets sonores synchronisés (optionnel)"
     ],
     "tags": ["typography", "animation", "ui"]
-  }
+  },{
+  "id": "03",
+  "title": "Mini Calendar",
+  "description": "Composant d'affichage de date minimaliste et responsive. Affiche le mois, le jour de la semaine, le numéro du jour et l'année. Structure HTML claire et prête à être enrichie avec du JavaScript dynamique.",
+  "link": "projects/03-mini-calendar/index.html",
+  "technologies": ["HTML5", "CSS3", "JavaScript ES6"],
+  "features": [
+    "Affichage statique de la date actuelle",
+    "Structure modulaire et facilement intégrable",
+    "Compatible avec tous les écrans (responsive)",
+    "Préparé pour une extension dynamique via JavaScript"
+  ],
+  "tags": ["calendar", "UI", "responsive design"]
+}
 ]
